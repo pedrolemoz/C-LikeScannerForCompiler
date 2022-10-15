@@ -5,10 +5,9 @@ class Scanner {
   int _currentIndex = 0;
   late final int _maxSourceCodeLength;
   final _identifierAndKeywordRegExp = RegExp('[A-Za-z_]');
-  final _numberRegExp = RegExp('[0-9.]');
+  final _allNumbersRegExp = RegExp('[0-9+-.]');
+  final _floatNumberRegExp = RegExp(r'^[+-]?([0-9]+([.][0-9]+)+|[.][0-9]+)$');
   final _stringRegExp = RegExp('[\"\']');
-  List<Token> _tokens = [];
-  List<Token> get tokens => _tokens.toList();
 
   Scanner(this._sourceCode) {
     _maxSourceCodeLength = _sourceCode.length - 1;
@@ -35,209 +34,179 @@ class Scanner {
 
     if (_isEOF) {
       _setCurrentIndexToEOF();
-      return EndOfFileKeyword('EOF');
+      return const EndOfFileKeyword();
     }
 
     if (_currentCharacter == ' ' || _currentCharacter == '\n' || _currentCharacter == '\t') incrementCurrentIndex();
 
     if (_currentCharacter == '(') {
-      token = OpenParenthesisSeparator(_currentCharacter);
       incrementCurrentIndex();
-      return token;
+      return const OpenParenthesisSeparator();
     }
 
     if (_currentCharacter == ')') {
-      token = CloseParenthesisSeparator(_currentCharacter);
       incrementCurrentIndex();
-      return token;
+      return const CloseParenthesisSeparator();
     }
 
     if (_currentCharacter == '{') {
-      token = OpenCurlyBraceSeparator(_currentCharacter);
       incrementCurrentIndex();
-      return token;
+      return const OpenCurlyBraceSeparator();
     }
 
     if (_currentCharacter == '}') {
-      token = CloseCurlyBraceSeparator(_currentCharacter);
       incrementCurrentIndex();
-      return token;
+      return const CloseCurlyBraceSeparator();
     }
 
     if (_currentCharacter == '[') {
-      token = OpenSquareBracketSeparator(_currentCharacter);
       incrementCurrentIndex();
-      return token;
+      return const OpenSquareBracketSeparator();
     }
 
     if (_currentCharacter == '[') {
-      token = CloseSquareBracketSeparator(_currentCharacter);
       incrementCurrentIndex();
-      return token;
+      return const CloseSquareBracketSeparator();
     }
 
     if (_currentCharacter == ';') {
-      token = SemicolonSeparator(_currentCharacter);
       incrementCurrentIndex();
-      return token;
+      return const SemicolonSeparator();
     }
 
     if (_currentCharacter == ',') {
-      token = CommaSeparator(_currentCharacter);
       incrementCurrentIndex();
-      return token;
+      return const CommaSeparator();
     }
 
     if (_currentCharacter == '+') {
       final nextCharacter = _nextCharacter;
 
       if (nextCharacter != null && nextCharacter == '+') {
-        token = IncrementOperator('$_currentCharacter$nextCharacter');
         incrementCurrentIndex(2);
-        return token;
+        return const IncrementOperator();
       }
 
       if (nextCharacter != null && nextCharacter == '=') {
-        token = AdditionAssignmentOperator('$_currentCharacter$nextCharacter');
         incrementCurrentIndex(2);
-        return token;
+        return const AdditionAssignmentOperator();
       }
 
-      token = AdditionOperator(_currentCharacter);
       incrementCurrentIndex();
-      return token;
+      return const AdditionOperator();
     }
 
     if (_currentCharacter == '-') {
       final nextCharacter = _nextCharacter;
 
       if (nextCharacter != null && nextCharacter == '-') {
-        token = DecrementOperator('$_currentCharacter$nextCharacter');
         incrementCurrentIndex(2);
-        return token;
+        return const DecrementOperator();
       }
 
       if (nextCharacter != null && nextCharacter == '=') {
-        token = SubtractionAssignmentOperator('$_currentCharacter$nextCharacter');
         incrementCurrentIndex(2);
-        return token;
+        return const SubtractionAssignmentOperator();
       }
 
-      token = SubtractionOperator(_currentCharacter);
       incrementCurrentIndex();
-      return token;
+      return const SubtractionOperator();
     }
 
     if (_currentCharacter == '*') {
       final nextCharacter = _nextCharacter;
 
       if (nextCharacter != null && nextCharacter == '=') {
-        token = MultiplicationAssignmentOperator('$_currentCharacter$nextCharacter');
         incrementCurrentIndex(2);
-        return token;
+        return const MultiplicationAssignmentOperator();
       }
 
-      token = MultiplicationOperator(_currentCharacter);
       incrementCurrentIndex();
-      return token;
+      return const MultiplicationOperator();
     }
 
     if (_currentCharacter == '/') {
       final nextCharacter = _nextCharacter;
 
       if (nextCharacter != null && nextCharacter == '=') {
-        token = DivisionAssignmentOperator('$_currentCharacter$nextCharacter');
         incrementCurrentIndex(2);
-        return token;
+        return const DivisionAssignmentOperator();
       }
 
-      token = DivisionOperator(_currentCharacter);
       incrementCurrentIndex();
-      return token;
+      return const DivisionOperator();
     }
 
     if (_currentCharacter == '<') {
       final nextCharacter = _nextCharacter;
 
       if (nextCharacter != null && nextCharacter == '=') {
-        token = LessOrEqualThanOperator('$_currentCharacter$nextCharacter');
         incrementCurrentIndex(2);
-        return token;
+        return const LessOrEqualThanOperator();
       }
 
-      token = LessThanOperator(_currentCharacter);
       incrementCurrentIndex();
-      return token;
+      return const LessThanOperator();
     }
 
     if (_currentCharacter == '>') {
       final nextCharacter = _nextCharacter;
 
       if (nextCharacter != null && nextCharacter == '=') {
-        token = GreaterOrEqualThanOperator('$_currentCharacter$nextCharacter');
         incrementCurrentIndex(2);
-        return token;
+        return const GreaterOrEqualThanOperator();
       }
 
-      token = GreaterThanOperator(_currentCharacter);
       incrementCurrentIndex();
-      return token;
+      return const GreaterThanOperator();
     }
 
     if (_currentCharacter == '=') {
       final nextCharacter = _nextCharacter;
 
       if (nextCharacter != null && nextCharacter == '==') {
-        token = EqualOperator('$_currentCharacter$nextCharacter');
         incrementCurrentIndex(2);
-        return token;
+        return const EqualOperator();
       }
 
-      token = AssignmentOperator(_currentCharacter);
       incrementCurrentIndex();
-      return token;
+      return const AssignmentOperator();
     }
 
     if (_currentCharacter == '!') {
       final nextCharacter = _nextCharacter;
 
       if (nextCharacter != null && nextCharacter == '=') {
-        token = NotEqualOperator('$_currentCharacter$nextCharacter');
         incrementCurrentIndex(2);
-        return token;
+        return const NotEqualOperator();
       }
 
-      token = NotOperator(_currentCharacter);
       incrementCurrentIndex();
-      return token;
+      return const NotOperator();
     }
 
     if (_currentCharacter == '|') {
       final nextCharacter = _nextCharacter;
 
       if (nextCharacter != null && nextCharacter == '|') {
-        token = OrOperator('$_currentCharacter$nextCharacter');
         incrementCurrentIndex(2);
-        return token;
+        return const OrOperator();
       }
 
-      token = BitwiseOrOperator(_currentCharacter);
       incrementCurrentIndex();
-      return token;
+      return const BitwiseOrOperator();
     }
 
     if (_currentCharacter == '&') {
       final nextCharacter = _nextCharacter;
 
       if (nextCharacter != null && nextCharacter == '&') {
-        token = AndOperator('$_currentCharacter$nextCharacter');
         incrementCurrentIndex(2);
-        return token;
+        return const AndOperator();
       }
 
-      token = BitwiseAndOperator(_currentCharacter);
       incrementCurrentIndex();
-      return token;
+      return const BitwiseAndOperator();
     }
 
     if (_identifierAndKeywordRegExp.hasMatch(_currentCharacter)) {
@@ -252,41 +221,41 @@ class Scanner {
 
       switch (expression) {
         case 'int':
-          return IntKeyword(expression);
+          return const IntKeyword();
         case 'float':
-          return FloatKeyword(expression);
+          return const FloatKeyword();
         case 'char':
-          return CharKeyword(expression);
+          return const CharKeyword();
         case 'void':
-          return VoidKeyword(expression);
+          return const VoidKeyword();
         case 'null':
-          return NullLiteral(expression);
+          return const NullLiteral();
         case 'return':
-          return ReturnKeyword(expression);
+          return const ReturnKeyword();
         case 'if':
-          return IfKeyword(expression);
+          return const IfKeyword();
         case 'else':
-          return ElseKeyword(expression);
+          return const ElseKeyword();
         case 'for':
-          return ForKeyword(expression);
+          return const ForKeyword();
         case 'while':
-          return WhileKeyword(expression);
+          return const WhileKeyword();
         default:
           return UserDefinedIdentifier(expression);
       }
     }
 
-    if (_numberRegExp.hasMatch(_currentCharacter)) {
+    if (_allNumbersRegExp.hasMatch(_currentCharacter)) {
       final expressionBuffer = StringBuffer();
 
-      while (_numberRegExp.hasMatch(_currentCharacter)) {
+      while (_allNumbersRegExp.hasMatch(_currentCharacter)) {
         expressionBuffer.write(_currentCharacter);
         incrementCurrentIndex();
       }
 
       final expression = expressionBuffer.toString();
 
-      if (expression.contains('.')) {
+      if (_floatNumberRegExp.hasMatch(expression)) {
         return FloatLiteral(expression);
       } else {
         return IntLiteral(expression);
@@ -294,5 +263,7 @@ class Scanner {
     }
 
     if (_stringRegExp.hasMatch(_currentCharacter)) {}
+
+    return null;
   }
 }

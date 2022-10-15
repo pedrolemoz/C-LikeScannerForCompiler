@@ -1,10 +1,10 @@
-import 'package:scanner/definitions.dart';
-
+import 'definitions.dart';
 import 'scanner.dart';
 
-final code = '''
+const code = '''
 int main() {
     int a = 10;
+    floab b = 45.5;
     int c;
     for (int i = 0; i <= 10; i++) {
         if (i + a <= 15) {
@@ -13,14 +13,9 @@ int main() {
     }
     return 0;
 }
-
-void some_fn() {
-  return null;
-}
 ''';
 
 void main() {
-  print('Tokens:');
   final scanner = Scanner(code);
 
   while (true) {

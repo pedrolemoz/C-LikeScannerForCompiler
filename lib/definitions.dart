@@ -1,218 +1,218 @@
 class Token {
   final String value;
 
-  Token(this.value);
+  const Token(this.value);
 
   @override
-  String toString() => '<${this.runtimeType}, $value>';
+  String toString() => '<$runtimeType , $value>';
 }
 
 class Identifier extends Token {
-  Identifier(super.value);
+  const Identifier(super.value);
 }
 
 class Keyword extends Token {
-  Keyword(super.value);
+  const Keyword(super.value);
 }
 
 class Separator extends Token {
-  Separator(super.value);
+  const Separator(super.value);
 }
 
 class Operator extends Token {
-  Operator(super.value);
+  const Operator(super.value);
 }
 
 class Literal extends Token {
-  Literal(super.value);
+  const Literal(super.value);
 }
 
 // Identifiers
 
 class UserDefinedIdentifier extends Identifier {
-  UserDefinedIdentifier(super.value);
+  const UserDefinedIdentifier(super.value);
 }
 
 // Keywords
 
 class EndOfFileKeyword extends Keyword {
-  EndOfFileKeyword(super.value);
+  const EndOfFileKeyword() : super('EOF');
 }
 
 class ForKeyword extends Keyword {
-  ForKeyword(super.value);
+  const ForKeyword() : super('for');
 }
 
 class WhileKeyword extends Keyword {
-  WhileKeyword(super.value);
+  const WhileKeyword() : super('while');
 }
 
 class IfKeyword extends Keyword {
-  IfKeyword(super.value);
+  const IfKeyword() : super('if');
 }
 
 class ElseKeyword extends Keyword {
-  ElseKeyword(super.value);
+  const ElseKeyword() : super('else');
 }
 
 class ReturnKeyword extends Keyword {
-  ReturnKeyword(super.value);
+  const ReturnKeyword() : super('return');
 }
 
 class IntKeyword extends Keyword {
-  IntKeyword(super.value);
+  const IntKeyword() : super('int');
 }
 
 class FloatKeyword extends Keyword {
-  FloatKeyword(super.value);
+  const FloatKeyword() : super('float');
 }
 
 class CharKeyword extends Keyword {
-  CharKeyword(super.value);
+  const CharKeyword() : super('char');
 }
 
 class VoidKeyword extends Keyword {
-  VoidKeyword(super.value);
+  const VoidKeyword() : super('void');
 }
 
 // Literals
 
 class IntLiteral extends Literal {
-  IntLiteral(super.value);
+  const IntLiteral(super.value);
 }
 
 class FloatLiteral extends Literal {
-  FloatLiteral(super.value);
+  const FloatLiteral(super.value);
 }
 
 class CharLiteral extends Literal {
-  CharLiteral(super.value);
+  const CharLiteral(super.value);
 }
 
 class NullLiteral extends Literal {
-  NullLiteral(super.value);
+  const NullLiteral() : super('null');
 }
 
 // Separators
 
 class OpenParenthesisSeparator extends Separator {
-  OpenParenthesisSeparator(super.value);
+  const OpenParenthesisSeparator() : super('(');
 }
 
 class CloseParenthesisSeparator extends Separator {
-  CloseParenthesisSeparator(super.value);
+  const CloseParenthesisSeparator() : super(')');
 }
 
 class OpenCurlyBraceSeparator extends Separator {
-  OpenCurlyBraceSeparator(super.value);
+  const OpenCurlyBraceSeparator() : super('{');
 }
 
 class CloseCurlyBraceSeparator extends Separator {
-  CloseCurlyBraceSeparator(super.value);
+  const CloseCurlyBraceSeparator() : super('}');
 }
 
 class OpenSquareBracketSeparator extends Separator {
-  OpenSquareBracketSeparator(super.value);
+  const OpenSquareBracketSeparator() : super('[');
 }
 
 class CloseSquareBracketSeparator extends Separator {
-  CloseSquareBracketSeparator(super.value);
+  const CloseSquareBracketSeparator() : super(']');
 }
 
 class SemicolonSeparator extends Separator {
-  SemicolonSeparator(super.value);
+  const SemicolonSeparator() : super(';');
 }
 
 class CommaSeparator extends Separator {
-  CommaSeparator(super.value);
+  const CommaSeparator() : super(',');
 }
 
 // Operators
 
 class AssignmentOperator extends Operator {
-  AssignmentOperator(super.value);
+  const AssignmentOperator() : super('=');
 }
 
 class AdditionOperator extends Operator {
-  AdditionOperator(super.value);
+  const AdditionOperator() : super('+');
 }
 
 class AdditionAssignmentOperator extends Operator {
-  AdditionAssignmentOperator(super.value);
+  const AdditionAssignmentOperator() : super('+=');
 }
 
 class IncrementOperator extends Operator {
-  IncrementOperator(super.value);
+  const IncrementOperator() : super('++');
 }
 
 class SubtractionOperator extends Operator {
-  SubtractionOperator(super.value);
+  const SubtractionOperator() : super('-');
 }
 
 class SubtractionAssignmentOperator extends Operator {
-  SubtractionAssignmentOperator(super.value);
+  const SubtractionAssignmentOperator() : super('-=');
 }
 
 class DecrementOperator extends Operator {
-  DecrementOperator(super.value);
+  const DecrementOperator() : super('--');
 }
 
 class MultiplicationOperator extends Operator {
-  MultiplicationOperator(super.value);
+  const MultiplicationOperator() : super('*');
 }
 
 class MultiplicationAssignmentOperator extends Operator {
-  MultiplicationAssignmentOperator(super.value);
+  const MultiplicationAssignmentOperator() : super('*=');
 }
 
 class DivisionOperator extends Operator {
-  DivisionOperator(super.value);
+  const DivisionOperator() : super('/');
 }
 
 class DivisionAssignmentOperator extends Operator {
-  DivisionAssignmentOperator(super.value);
+  const DivisionAssignmentOperator() : super('/=');
 }
 
 class LessThanOperator extends Operator {
-  LessThanOperator(super.value);
+  const LessThanOperator() : super('<');
 }
 
 class LessOrEqualThanOperator extends Operator {
-  LessOrEqualThanOperator(super.value);
+  const LessOrEqualThanOperator() : super('<=');
 }
 
 class GreaterThanOperator extends Operator {
-  GreaterThanOperator(super.value);
+  const GreaterThanOperator() : super('>');
 }
 
 class GreaterOrEqualThanOperator extends Operator {
-  GreaterOrEqualThanOperator(super.value);
+  const GreaterOrEqualThanOperator() : super('>=');
 }
 
 class EqualOperator extends Operator {
-  EqualOperator(super.value);
+  const EqualOperator() : super('==');
 }
 
 class NotEqualOperator extends Operator {
-  NotEqualOperator(super.value);
+  const NotEqualOperator() : super('!=');
 }
 
 class AndOperator extends Operator {
-  AndOperator(super.value);
+  const AndOperator() : super('&&');
 }
 
 class OrOperator extends Operator {
-  OrOperator(super.value);
+  const OrOperator() : super('||');
 }
 
 class NotOperator extends Operator {
-  NotOperator(super.value);
+  const NotOperator() : super('!');
 }
 
 class BitwiseAndOperator extends Operator {
-  BitwiseAndOperator(super.value);
+  const BitwiseAndOperator() : super('&');
 }
 
 class BitwiseOrOperator extends Operator {
-  BitwiseOrOperator(super.value);
+  const BitwiseOrOperator() : super('|');
 }
