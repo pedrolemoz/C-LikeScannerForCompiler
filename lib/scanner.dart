@@ -12,7 +12,7 @@ class Scanner {
     _setSourceCodeMaxLength();
   }
 
-  void _setSourceCodeMaxLength() => _maxSourceCodeLength = _sourceCode.length - 1;
+  void _setSourceCodeMaxLength() => _maxSourceCodeLength = _sourceCode.length;
 
   String get _currentCharacter => _sourceCode[_currentIndex];
 

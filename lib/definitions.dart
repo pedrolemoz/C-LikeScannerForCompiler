@@ -4,7 +4,7 @@ class Token {
   const Token(this.value);
 
   @override
-  String toString() => '$value, $runtimeType';
+  String toString() => '$value => $runtimeType';
 }
 
 class Identifier extends Token {

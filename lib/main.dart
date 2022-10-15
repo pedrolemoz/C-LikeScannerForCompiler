@@ -1,24 +1,18 @@
+import 'dart:io';
+
+import 'package:path/path.dart';
+
 import 'definitions.dart';
 import 'scanner.dart';
 
-const code = '''
-int main() {
-    char p = "p";
-    int a = 10;
-    float b = 45.5;
-    int c;
-    for (int i = 0; i <= 10; i++) {
-        if (i + a <= 15) {
-            c = i;
-        }
-    }
-    while (1) {break;}
-    return 0;
-}
-''';
+void main(List<String> args) {
+  if (args.isEmpty) throw Exception('Source file path should be specified');
 
-void main() {
-  final scanner = Scanner(code);
+  final filePath = args.first;
+  final sourceFile = File(normalize(filePath));
+  final sourceCode = sourceFile.readAsStringSync();
+
+  final scanner = Scanner(sourceCode);
 
   while (true) {
     final token = scanner.nextToken;
