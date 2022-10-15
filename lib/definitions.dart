@@ -27,6 +27,10 @@ class Literal extends Token {
   const Literal(super.value);
 }
 
+class Comment extends Token {
+  const Comment(super.value);
+}
+
 // Identifiers
 
 class UserDefinedIdentifier extends Identifier {

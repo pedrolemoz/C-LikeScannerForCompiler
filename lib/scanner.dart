@@ -133,6 +133,21 @@ class Scanner {
         return const DivisionAssignmentOperator();
       }
 
+      if (nextCharacter != null && nextCharacter == '/') {
+        final expressionBuffer = StringBuffer();
+
+        _incrementCurrentIndex(2);
+
+        while (_currentCharacter != '\n') {
+          expressionBuffer.write(_currentCharacter);
+          _incrementCurrentIndex();
+        }
+
+        final expression = expressionBuffer.toString();
+
+        return Comment(expression);
+      }
+
       _incrementCurrentIndex();
       return const DivisionOperator();
     }
