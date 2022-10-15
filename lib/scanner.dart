@@ -80,14 +80,12 @@ class Scanner {
     }
 
     if (_currentCharacter == '+') {
-      final nextCharacter = _nextCharacter;
-
-      if (nextCharacter != null && nextCharacter == '+') {
+      if (_nextCharacter != null && _nextCharacter == '+') {
         _incrementCurrentIndex(2);
         return const IncrementOperator();
       }
 
-      if (nextCharacter != null && nextCharacter == '=') {
+      if (_nextCharacter != null && _nextCharacter == '=') {
         _incrementCurrentIndex(2);
         return const AdditionAssignmentOperator();
       }
@@ -97,14 +95,12 @@ class Scanner {
     }
 
     if (_currentCharacter == '-') {
-      final nextCharacter = _nextCharacter;
-
-      if (nextCharacter != null && nextCharacter == '-') {
+      if (_nextCharacter != null && _nextCharacter == '-') {
         _incrementCurrentIndex(2);
         return const DecrementOperator();
       }
 
-      if (nextCharacter != null && nextCharacter == '=') {
+      if (_nextCharacter != null && _nextCharacter == '=') {
         _incrementCurrentIndex(2);
         return const SubtractionAssignmentOperator();
       }
@@ -114,9 +110,7 @@ class Scanner {
     }
 
     if (_currentCharacter == '*') {
-      final nextCharacter = _nextCharacter;
-
-      if (nextCharacter != null && nextCharacter == '=') {
+      if (_nextCharacter != null && _nextCharacter == '=') {
         _incrementCurrentIndex(2);
         return const MultiplicationAssignmentOperator();
       }
@@ -126,14 +120,12 @@ class Scanner {
     }
 
     if (_currentCharacter == '/') {
-      final nextCharacter = _nextCharacter;
-
-      if (nextCharacter != null && nextCharacter == '=') {
+      if (_nextCharacter != null && _nextCharacter == '=') {
         _incrementCurrentIndex(2);
         return const DivisionAssignmentOperator();
       }
 
-      if (nextCharacter != null && nextCharacter == '/') {
+      if (_nextCharacter != null && _nextCharacter == '/') {
         final expressionBuffer = StringBuffer();
 
         _incrementCurrentIndex(2);
@@ -153,9 +145,7 @@ class Scanner {
     }
 
     if (_currentCharacter == '<') {
-      final nextCharacter = _nextCharacter;
-
-      if (nextCharacter != null && nextCharacter == '=') {
+      if (_nextCharacter != null && _nextCharacter == '=') {
         _incrementCurrentIndex(2);
         return const LessOrEqualThanOperator();
       }
@@ -165,9 +155,7 @@ class Scanner {
     }
 
     if (_currentCharacter == '>') {
-      final nextCharacter = _nextCharacter;
-
-      if (nextCharacter != null && nextCharacter == '=') {
+      if (_nextCharacter != null && _nextCharacter == '=') {
         _incrementCurrentIndex(2);
         return const GreaterOrEqualThanOperator();
       }
@@ -177,9 +165,7 @@ class Scanner {
     }
 
     if (_currentCharacter == '=') {
-      final nextCharacter = _nextCharacter;
-
-      if (nextCharacter != null && nextCharacter == '==') {
+      if (_nextCharacter != null && _nextCharacter == '==') {
         _incrementCurrentIndex(2);
         return const EqualOperator();
       }
@@ -189,9 +175,7 @@ class Scanner {
     }
 
     if (_currentCharacter == '!') {
-      final nextCharacter = _nextCharacter;
-
-      if (nextCharacter != null && nextCharacter == '=') {
+      if (_nextCharacter != null && _nextCharacter == '=') {
         _incrementCurrentIndex(2);
         return const NotEqualOperator();
       }
@@ -201,9 +185,7 @@ class Scanner {
     }
 
     if (_currentCharacter == '|') {
-      final nextCharacter = _nextCharacter;
-
-      if (nextCharacter != null && nextCharacter == '|') {
+      if (_nextCharacter != null && _nextCharacter == '|') {
         _incrementCurrentIndex(2);
         return const OrOperator();
       }
@@ -213,9 +195,7 @@ class Scanner {
     }
 
     if (_currentCharacter == '&') {
-      final nextCharacter = _nextCharacter;
-
-      if (nextCharacter != null && nextCharacter == '&') {
+      if (_nextCharacter != null && _nextCharacter == '&') {
         _incrementCurrentIndex(2);
         return const AndOperator();
       }
