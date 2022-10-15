@@ -7,11 +7,12 @@ class Scanner {
   final _identifierAndKeywordRegExp = RegExp('[A-Za-z_]');
   final _allNumbersRegExp = RegExp('[0-9+-.]');
   final _floatNumberRegExp = RegExp(r'^[+-]?([0-9]+([.][0-9]+)+|[.][0-9]+)$');
-  final _stringRegExp = RegExp('[\"\']');
 
   Scanner(this._sourceCode) {
-    _maxSourceCodeLength = _sourceCode.length - 1;
+    _setSourceCodeMaxLength();
   }
+
+  void _setSourceCodeMaxLength() => _maxSourceCodeLength = _sourceCode.length - 1;
 
   String get _currentCharacter => _sourceCode[_currentIndex];
 
@@ -24,56 +25,57 @@ class Scanner {
 
   bool get _nextCharacterOutOfRange => _currentIndex + 1 > _maxSourceCodeLength;
 
-  void incrementCurrentIndex([int? quantityToIncrement]) =>
-      quantityToIncrement == null ? _currentIndex++ : _currentIndex += quantityToIncrement;
+  void _incrementCurrentIndex([int? quantityToIncrement]) => _currentIndex += quantityToIncrement ?? 1;
 
   void _setCurrentIndexToEOF() => _currentIndex = -1;
 
-  Token? get nextToken {
+  Token get nextToken {
     if (_isEOF) {
       _setCurrentIndexToEOF();
       return const EndOfFileKeyword();
     }
 
-    if (_currentCharacter == ' ' || _currentCharacter == '\n' || _currentCharacter == '\t') incrementCurrentIndex();
+    while (_currentCharacter == ' ' || _currentCharacter == '\n' || _currentCharacter == '\t') {
+      _incrementCurrentIndex();
+    }
 
     if (_currentCharacter == '(') {
-      incrementCurrentIndex();
+      _incrementCurrentIndex();
       return const OpenParenthesisSeparator();
     }
 
     if (_currentCharacter == ')') {
-      incrementCurrentIndex();
+      _incrementCurrentIndex();
       return const CloseParenthesisSeparator();
     }
 
     if (_currentCharacter == '{') {
-      incrementCurrentIndex();
+      _incrementCurrentIndex();
       return const OpenCurlyBraceSeparator();
     }
 
     if (_currentCharacter == '}') {
-      incrementCurrentIndex();
+      _incrementCurrentIndex();
       return const CloseCurlyBraceSeparator();
     }
 
     if (_currentCharacter == '[') {
-      incrementCurrentIndex();
+      _incrementCurrentIndex();
       return const OpenSquareBracketSeparator();
     }
 
     if (_currentCharacter == '[') {
-      incrementCurrentIndex();
+      _incrementCurrentIndex();
       return const CloseSquareBracketSeparator();
     }
 
     if (_currentCharacter == ';') {
-      incrementCurrentIndex();
+      _incrementCurrentIndex();
       return const SemicolonSeparator();
     }
 
     if (_currentCharacter == ',') {
-      incrementCurrentIndex();
+      _incrementCurrentIndex();
       return const CommaSeparator();
     }
 
@@ -81,16 +83,16 @@ class Scanner {
       final nextCharacter = _nextCharacter;
 
       if (nextCharacter != null && nextCharacter == '+') {
-        incrementCurrentIndex(2);
+        _incrementCurrentIndex(2);
         return const IncrementOperator();
       }
 
       if (nextCharacter != null && nextCharacter == '=') {
-        incrementCurrentIndex(2);
+        _incrementCurrentIndex(2);
         return const AdditionAssignmentOperator();
       }
 
-      incrementCurrentIndex();
+      _incrementCurrentIndex();
       return const AdditionOperator();
     }
 
@@ -98,16 +100,16 @@ class Scanner {
       final nextCharacter = _nextCharacter;
 
       if (nextCharacter != null && nextCharacter == '-') {
-        incrementCurrentIndex(2);
+        _incrementCurrentIndex(2);
         return const DecrementOperator();
       }
 
       if (nextCharacter != null && nextCharacter == '=') {
-        incrementCurrentIndex(2);
+        _incrementCurrentIndex(2);
         return const SubtractionAssignmentOperator();
       }
 
-      incrementCurrentIndex();
+      _incrementCurrentIndex();
       return const SubtractionOperator();
     }
 
@@ -115,11 +117,11 @@ class Scanner {
       final nextCharacter = _nextCharacter;
 
       if (nextCharacter != null && nextCharacter == '=') {
-        incrementCurrentIndex(2);
+        _incrementCurrentIndex(2);
         return const MultiplicationAssignmentOperator();
       }
 
-      incrementCurrentIndex();
+      _incrementCurrentIndex();
       return const MultiplicationOperator();
     }
 
@@ -127,11 +129,11 @@ class Scanner {
       final nextCharacter = _nextCharacter;
 
       if (nextCharacter != null && nextCharacter == '=') {
-        incrementCurrentIndex(2);
+        _incrementCurrentIndex(2);
         return const DivisionAssignmentOperator();
       }
 
-      incrementCurrentIndex();
+      _incrementCurrentIndex();
       return const DivisionOperator();
     }
 
@@ -139,11 +141,11 @@ class Scanner {
       final nextCharacter = _nextCharacter;
 
       if (nextCharacter != null && nextCharacter == '=') {
-        incrementCurrentIndex(2);
+        _incrementCurrentIndex(2);
         return const LessOrEqualThanOperator();
       }
 
-      incrementCurrentIndex();
+      _incrementCurrentIndex();
       return const LessThanOperator();
     }
 
@@ -151,11 +153,11 @@ class Scanner {
       final nextCharacter = _nextCharacter;
 
       if (nextCharacter != null && nextCharacter == '=') {
-        incrementCurrentIndex(2);
+        _incrementCurrentIndex(2);
         return const GreaterOrEqualThanOperator();
       }
 
-      incrementCurrentIndex();
+      _incrementCurrentIndex();
       return const GreaterThanOperator();
     }
 
@@ -163,11 +165,11 @@ class Scanner {
       final nextCharacter = _nextCharacter;
 
       if (nextCharacter != null && nextCharacter == '==') {
-        incrementCurrentIndex(2);
+        _incrementCurrentIndex(2);
         return const EqualOperator();
       }
 
-      incrementCurrentIndex();
+      _incrementCurrentIndex();
       return const AssignmentOperator();
     }
 
@@ -175,11 +177,11 @@ class Scanner {
       final nextCharacter = _nextCharacter;
 
       if (nextCharacter != null && nextCharacter == '=') {
-        incrementCurrentIndex(2);
+        _incrementCurrentIndex(2);
         return const NotEqualOperator();
       }
 
-      incrementCurrentIndex();
+      _incrementCurrentIndex();
       return const NotOperator();
     }
 
@@ -187,11 +189,11 @@ class Scanner {
       final nextCharacter = _nextCharacter;
 
       if (nextCharacter != null && nextCharacter == '|') {
-        incrementCurrentIndex(2);
+        _incrementCurrentIndex(2);
         return const OrOperator();
       }
 
-      incrementCurrentIndex();
+      _incrementCurrentIndex();
       return const BitwiseOrOperator();
     }
 
@@ -199,12 +201,33 @@ class Scanner {
       final nextCharacter = _nextCharacter;
 
       if (nextCharacter != null && nextCharacter == '&') {
-        incrementCurrentIndex(2);
+        _incrementCurrentIndex(2);
         return const AndOperator();
       }
 
-      incrementCurrentIndex();
+      _incrementCurrentIndex();
       return const BitwiseAndOperator();
+    }
+
+    if (_currentCharacter == '\"') {
+      final expressionBuffer = StringBuffer();
+
+      _incrementCurrentIndex();
+
+      while (_currentCharacter != '\"') {
+        expressionBuffer.write(_currentCharacter);
+        _incrementCurrentIndex();
+      }
+
+      final expression = expressionBuffer.toString();
+
+      // Future mapping for string type
+      if (expression.length > 1) {
+        throw Exception('Invalid char value: $expression');
+      } else {
+        _incrementCurrentIndex();
+        return CharLiteral(expression);
+      }
     }
 
     if (_identifierAndKeywordRegExp.hasMatch(_currentCharacter)) {
@@ -212,7 +235,7 @@ class Scanner {
 
       while (_identifierAndKeywordRegExp.hasMatch(_currentCharacter)) {
         expressionBuffer.write(_currentCharacter);
-        incrementCurrentIndex();
+        _incrementCurrentIndex();
       }
 
       final expression = expressionBuffer.toString();
@@ -230,6 +253,10 @@ class Scanner {
           return const NullLiteral();
         case 'return':
           return const ReturnKeyword();
+        case 'break':
+          return const BreakKeyword();
+        case 'continue':
+          return const ContinueKeyword();
         case 'if':
           return const IfKeyword();
         case 'else':
@@ -248,7 +275,7 @@ class Scanner {
 
       while (_allNumbersRegExp.hasMatch(_currentCharacter)) {
         expressionBuffer.write(_currentCharacter);
-        incrementCurrentIndex();
+        _incrementCurrentIndex();
       }
 
       final expression = expressionBuffer.toString();
@@ -260,8 +287,6 @@ class Scanner {
       }
     }
 
-    if (_stringRegExp.hasMatch(_currentCharacter)) {}
-
-    return null;
+    throw Exception('Invalid expression: $_currentCharacter');
   }
 }

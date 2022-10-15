@@ -4,7 +4,7 @@ class Token {
   const Token(this.value);
 
   @override
-  String toString() => '<$runtimeType , $value>';
+  String toString() => '$value, $runtimeType';
 }
 
 class Identifier extends Token {
@@ -57,6 +57,14 @@ class ElseKeyword extends Keyword {
 
 class ReturnKeyword extends Keyword {
   const ReturnKeyword() : super('return');
+}
+
+class BreakKeyword extends Keyword {
+  const BreakKeyword() : super('break');
+}
+
+class ContinueKeyword extends Keyword {
+  const ContinueKeyword() : super('continue');
 }
 
 class IntKeyword extends Keyword {
