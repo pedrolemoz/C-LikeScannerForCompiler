@@ -30,8 +30,6 @@ class Scanner {
   void _setCurrentIndexToEOF() => _currentIndex = -1;
 
   Token? get nextToken {
-    late final Token token;
-
     if (_isEOF) {
       _setCurrentIndexToEOF();
       return const EndOfFileKeyword();
